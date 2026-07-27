@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+
+  student-app:
+    build: .
+    container_name: student-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
