@@ -11,14 +11,14 @@ pipeline {
 
         stage('Verify Node') {
             steps {
-                bat 'node -v'
-                bat 'npm -v'
+                sh 'node -v'
+                sh 'npm -v'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                bat 'npm install'
+                sh 'npm install'
             }
         }
 
@@ -29,7 +29,7 @@ pipeline {
         }
          stage('Build Docker Image') {
              steps {
-                 bat 'docker build -t student-registration .'
+                 sh 'docker build -t student-registration .'
             }
         }
 
