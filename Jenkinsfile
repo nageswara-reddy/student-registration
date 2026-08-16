@@ -24,9 +24,9 @@ pipeline {
             }
         }
 
-        stage('Build Complete') {
+        stage('Run Tests') {
             steps {
-                echo 'Node.js project is ready!'
+                sh 'npm test'
             }
         }
 
@@ -45,13 +45,15 @@ pipeline {
                 )]) {
 
                     sh '''
-                        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+                        echo "$DOCKER_PASSWORD" | docker login \
+                            -u "$DOCKER_USERNAME" \
+                            --password-stdin
 
                         docker tag student-registration:latest \
-                        $DOCKER_USERNAME/student-registration:latest
+                            $DOCKER_USERNAME/student-registration:latest
 
                         docker push \
-                        $DOCKER_USERNAME/student-registration:latest
+                            $DOCKER_USERNAME/student-registration:latest
 
                         docker logout
                     '''
@@ -63,9 +65,7 @@ pipeline {
             steps {
                 sh '''
                     docker compose down || true
-
                     docker compose pull
-
                     docker compose up -d
                 '''
             }
@@ -73,9 +73,7 @@ pipeline {
 
         stage('Verify Deployment') {
             steps {
-                sh '''
-                    docker compose ps
-                '''
+                sh 'docker compose ps'
             }
         }
     }
@@ -86,7 +84,7 @@ pipeline {
         }
 
         failure {
-            echo 'Pipeline failed. Check the stage logs above.'
+            echo 'Pipeline failed. Check the stage logs.'
         }
     }
 }
