@@ -3,8 +3,5 @@ FROM jenkins/jenkins:lts
 USER root
 
 RUN apt-get update && \
-    apt-get install -y curl git ca-certificates lsb-release gnupg docker-compose-plugin && \
-    curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
-    apt-get install -y nodejs docker.io && \
-    apt-get clean && \
+    apt-get install -y docker.io docker-compose-plugin && \
     rm -rf /var/lib/apt/lists/*
