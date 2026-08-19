@@ -36,6 +36,12 @@ pipeline {
             }
         }
 
+        stage('Trivy security scan') {
+            steps {
+                sh 'trivy image --timeout 30m student-registration:latest'
+            }
+        }
+
         stage('Push Docker Image') {
             steps {
                 withCredentials([usernamePassword(
@@ -87,4 +93,4 @@ pipeline {
             echo 'Pipeline failed. Check the stage logs.'
         }
     }
-}
+}  
