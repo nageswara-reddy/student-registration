@@ -1,16 +1,16 @@
 pipeline {
     agent any
 
-    stages {
-
         stage('Clone Source Code') {
             steps {
+                deleteDir()
+
                 echo 'Downloading project from GitHub'
 
-                git 'https://github.com/nageswara-reddy/student-registration.git'
+               git 'https://github.com/nageswara-reddy/student-registration.git'
             }
         }
-
+        
         stage('Verify Node') {
             steps {
                 sh 'node -v'
